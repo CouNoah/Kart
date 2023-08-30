@@ -11,7 +11,9 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".MyKartRemote"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="landscape">
+
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
                 <category android:name="ch.hevs.kart.RCA2" />
