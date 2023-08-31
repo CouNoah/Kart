@@ -27,46 +27,60 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/positionLightButton" />
 
-    <TextView
-        android:id="@+id/textView"
+    <Button
+        android:id="@+id/chassisLightButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginBottom="10dp"
-        android:text="Feux"
-        app:layout_constraintBottom_toTopOf="@+id/positionLightButton"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="108dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#E1E1E1E1"
+        android:text="DOC.mp3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/positionLightButton" />
+
+    <Button
+        android:id="@+id/chassisLightButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="204dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#E1E1E1E1"
+        android:text="Portes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/positionLightButton" />
 
     <SeekBar
-        android:id="@+id/directionBar"
-        android:layout_width="380dp"
-        android:layout_height="102dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="100dp"
-        android:max="100"
-        android:paddingHorizontal="30dp"
+        android:id="@+id/directionBarID"
+        android:layout_width="382dp"
+        android:layout_height="228dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="3dp"
+        android:max="180"
         android:pointerIcon="context_menu"
-        android:progress="50"
-        android:thumb="@drawable/ic_launcher_foreground"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:progress="90"
+        android:thumb="@android:drawable/btn_radio"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.675" />
+        app:layout_constraintTop_toBottomOf="@+id/parameterButtonID"
+        app:layout_goneMarginLeft="100dp" />
 
     <SeekBar
         android:id="@+id/gasBarID"
         android:layout_width="250dp"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="4dp"
-        android:progress="50"
+        android:max="200"
+        android:orientation="vertical"
+        android:progress="100"
         android:rotation="-90"
+        android:thumb="@android:drawable/btn_radio"
+        android:verticalScrollbarPosition="defaultPosition"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.474" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/parameterButtonID"
         style="@style/Widget.AppCompat.ImageButton"
         android:layout_width="65dp"
         android:layout_height="65dp"
@@ -83,11 +97,52 @@
         android:layout_width="140dp"
         android:layout_height="36dp"
         android:layout_marginStart="400dp"
-        android:layout_marginTop="120dp"
-        android:text="Power:"
+        android:layout_marginTop="108dp"
+        android:text="Power: 0 %"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/chassisLightButton"
         app:layout_constraintTop_toBottomOf="@+id/gasBarID" />
+
+    <TextView
+        android:id="@+id/powerLevelTextID2"
+        android:layout_width="140dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="400dp"
+        android:layout_marginTop="136dp"
+        android:text="Speed: "
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/chassisLightButton"
+        app:layout_constraintTop_toBottomOf="@+id/gasBarID" />
+
+    <TextView
+        android:id="@+id/angleTextID"
+        android:layout_width="140dp"
+        android:layout_height="36dp"
+        android:text="Angle"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageView
+        android:id="@+id/swID"
+        android:layout_width="265dp"
+        android:layout_height="251dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintStart_toEndOf="@+id/parameterButtonID"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="439dp"
+        android:layout_marginTop="16dp"
+        android:text="CAPTEUR DE DISTANCE"
+        app:layout_constraintStart_toEndOf="@+id/parameterButtonID"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
