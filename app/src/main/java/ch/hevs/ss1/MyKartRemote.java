@@ -30,6 +30,8 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     ImageView sw;
     ImageButton parameterButton;
     TextView angleText;
+    int seekGasIncrease = 15;
+    int seekSteeringIncrease = 280;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,8 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         gasBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            gasLevelText.setText("Power: " + String.valueOf(abs(i-100)) +" %");
+            gasLevelText.setText("Power: " + String.valueOf(abs(i*(100/seekGasIncrease)-100)) +" %");
+            kart.setDriveSpeed(i-seekGasIncrease);
             Log.d("DRIVE MOTOR", String.valueOf(kart.getDriveSpeed()));
             }
 
@@ -62,7 +65,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Log.d("SEEKBAR", "User release the gasBar");
-                gasBar.setProgress(100);
+                gasBar.setProgress(seekGasIncrease);
             }
         });
 
@@ -71,7 +74,9 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 Log.d("SEEKBAR", "move");
-                sw.setRotation(i-90);
+                sw.setRotation(kart.getSteeringPosition());
+                angleText.setText(" Angle: " + i + String.valueOf(kart.getSteeringPosition()));
+                kart.setSteeringTargetPosition(i);
             }
 
             @Override
@@ -82,7 +87,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Log.d("SEEKBAR", "User release the directionBar");
-                directionBar.setProgress(90);
+                directionBar.setProgress(seekSteeringIncrease);
             }
         });
 
