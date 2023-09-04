@@ -54,7 +54,7 @@
         android:layout_width="382dp"
         android:layout_height="50dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="168dp"
         android:max="560"
         android:pointerIcon="context_menu"
         android:progress="280"
@@ -130,7 +130,7 @@
         android:id="@+id/swID"
         android:layout_width="265dp"
         android:layout_height="251dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toEndOf="@+id/parameterButtonID"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_foreground" />
@@ -144,5 +144,13 @@
         android:text="CAPTEUR DE DISTANCE"
         app:layout_constraintStart_toEndOf="@+id/parameterButtonID"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/batteryLevelID"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="144dp"
+        android:layout_height="43dp"
+        tools:layout_editor_absoluteX="409dp"
+        tools:layout_editor_absoluteY="331dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

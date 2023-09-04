@@ -75,7 +75,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 Log.d("SEEKBAR", "move");
                 sw.setRotation(kart.getSteeringPosition());
-                angleText.setText(" Angle: " + i + String.valueOf(kart.getSteeringPosition()));
+                angleText.setText(" Angle: " + i + String.valueOf(kart.getSteeringPosition()) + String.valueOf(kart.getSteeringPositionNormalized()));
                 kart.setSteeringTargetPosition(i);
             }
 
