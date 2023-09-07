@@ -176,20 +176,20 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
             }
         });
 
-        /*feuxdepanne.setOnClickListener(new View.OnClickListener() {
+        feuxdepanne_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(!kart.getLedState(0)){
                     //((Button) positionLightButton).setBackgroundColor(Color.GREEN);
-                    feuxdepanne.setBackgroundTintList(ColorStateList.valueOf(995299971));
+                    feuxdepanne_button.setBackgroundTintList(ColorStateList.valueOf(995299971));
                     System.out.println(positionLightButton.getBackgroundTintList());
                     kart.toggleLed(0);
                 }
                 else {
-                    feuxdepanne.setBackgroundTintList(ColorStateList.valueOf(995299971));
+                    feuxdepanne_button.setBackgroundTintList(ColorStateList.valueOf(995299971));
                     kart.toggleLed(0);
                 }
             }
-        });*/
+        });
     }
 
 
