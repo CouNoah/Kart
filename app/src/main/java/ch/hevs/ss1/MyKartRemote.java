@@ -31,7 +31,6 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     Switch swi_accelero_on_off;
     Switch swi_uSonic;
     TextView txt_uSonic_distance;
-    TextView gasLevelText;
     ImageView sw;
     ImageButton parameterButton;
 
@@ -89,7 +88,6 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         directionBar.setProgress(steeringMiddlePosition);
 
 
-        gasLevelText = (TextView)findViewById(R.id.powerLevelTextID);
         sw = (ImageView)findViewById(R.id.swID);
 
         parameterButton = (ImageButton)findViewById((R.id.parameterButtonID));
@@ -114,7 +112,6 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         gasBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            gasLevelText.setText("Power: " + String.valueOf(abs(i*(100/seekGasIncrease)-100)) +" %");
             kart.setDriveSpeed(i-seekGasIncrease);
             Log.d("DRIVE MOTOR", String.valueOf(kart.getDriveSpeed()));
             }

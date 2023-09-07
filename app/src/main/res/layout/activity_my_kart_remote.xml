@@ -112,17 +112,6 @@
         app:srcCompat="@drawable/ic_settings" />
 
     <TextView
-        android:id="@+id/powerLevelTextID"
-        android:layout_width="159dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="100dp"
-        android:text="Power: 0 %"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gasBarID" />
-
-    <TextView
         android:id="@+id/powerLevelTextID2"
         android:layout_width="160dp"
         android:layout_height="37dp"
@@ -165,9 +154,8 @@
 
     <TextView
         android:id="@+id/txt_uSonic_distanceID"
-        android:layout_width="101dp"
-        android:layout_height="22dp"
-        android:layout_marginEnd="4dp"
+        android:layout_width="28dp"
+        android:layout_marginEnd="70dp"
         android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swi_uSonicID" />
@@ -175,12 +163,10 @@
     <TextView
         android:id="@+id/Batterylevel_numID"
         android:layout_width="98dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="2dp"
         android:text="100%"
         app:layout_constraintBottom_toTopOf="@+id/batteryLevelID"
-        app:layout_constraintEnd_toStartOf="@+id/powerLevelTextID" />
+        app:layout_constraintStart_toEndOf="@+id/textView" />
 
     <ImageView
         android:id="@+id/swID"
@@ -211,9 +197,26 @@
         android:layout_width="262dp"
         android:layout_height="178dp"
         android:layout_marginTop="84dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginEnd="52dp"
         app:layout_constraintEnd_toStartOf="@+id/swi_uSonicID"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/machine" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Battery level:"
+        app:layout_constraintBottom_toTopOf="@+id/batteryLevelID"
+        tools:layout_editor_absoluteX="540dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:text="m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swi_uSonicID" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
