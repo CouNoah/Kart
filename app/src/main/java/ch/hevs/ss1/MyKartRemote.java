@@ -38,13 +38,13 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     ProgressBar batteryLevel;
     Button positionLightButton;
     int seekGasIncrease = 15;
-    int seekSteeringIncrease = 280;
     int beeppauseTime;
     int prevSpeedValue; // valeur de vitesse precedent la nouvelle mesure
     double thepositionangle;
     int Ledtoblink;
     boolean isledBlinkerindicatoractive = false;
     int theLedorangeLedToBlink = 1;
+    int steeringMiddlePosition;
     private boolean isLedBlinkerActive;
     private boolean isLedBlinkeronpause;
 
@@ -56,15 +56,24 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         beeppauseTime = 0;
         thepositionangle = 0;
         Ledtoblink = 6;
+
         //initialisation des variables pour le on/off du buzzer
         isLedBlinkerActive = false;
         isLedBlinkeronpause = false;
-        // Initialisation des variables
+
+        //Initialisation des variables
         setContentView(R.layout.activity_my_kart_remote);
         kart.addKartListener(this);
         positionLightButton = (Button) findViewById(R.id.positionLightButtonID);
         gasBar = (SeekBar)findViewById(R.id.gasBarID);
+
+        //initialisation pour la rotation
         directionBar = (SeekBar)findViewById(R.id.directionBarID);
+        directionBar.setMax((kart.setup().getSteeringMaxPosition()));
+        steeringMiddlePosition =(kart.setup().getSteeringCenterPosition());
+        directionBar.setProgress(steeringMiddlePosition);
+
+
         gasLevelText = (TextView)findViewById(R.id.powerLevelTextID);
         sw = (ImageView)findViewById(R.id.swID);
         parameterButton = (ImageButton)findViewById((R.id.parameterButtonID));
@@ -111,9 +120,9 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 Log.d("SEEKBAR", "move");
-                sw.setRotation(kart.getSteeringPosition()-35);
                 //angleText.setText(" Angle: " + i + String.valueOf(kart.getSteeringPosition()) + String.valueOf(kart.getSteeringPositionNormalized()));
                 kart.setSteeringTargetPosition(i);
+                System.out.println("angle " + i);
 
             }
 
@@ -125,7 +134,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Log.d("SEEKBAR", "User release the directionBar");
-                directionBar.setProgress(seekSteeringIncrease);
+                directionBar.setProgress(steeringMiddlePosition);
             }
         });
 
@@ -142,6 +151,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
                 if(!kart.getLedState(0)){
                     positionLightButton.setBackgroundColor(0x00FF0A);
                     kart.toggleLed(0);
+
                 }
                 else {
                     positionLightButton.setBackgroundColor(0xE1E1E1E1);
@@ -211,8 +221,10 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     //affichage de l'angle actuel sur l'écran et active les clignotant en fonction de la direction choisie
     @Override
     public void steeringPositionChanged(@NonNull Kart kart, int position){
-        thepositionangle = (((double)position)-280)*0.075;
-        angleText.setText(" Angle: " + String.format("%.1f",((((double)position)-280)*0.075)) + "°");
+        System.out.println("Steering changed: " + position + ", middle: " + kart.setup().getSteeringCenterPosition() + ", max: " + kart.setup().getSteeringMaxPosition());
+        thepositionangle = ((double) (position - steeringMiddlePosition)) * 0.075;
+        angleText.setText(String.format("Angle: %.0f°",thepositionangle));
+        sw.setRotation((float)(thepositionangle)-35);
         Timer ledBlinkerindicator = new Timer() {
             @Override
             public void onTimeout() {
