@@ -7,7 +7,7 @@
     tools:context=".MyKartRemote">
 
     <ImageButton
-        android:id="@+id/positionLightButtonID4"
+        android:id="@+id/clignot_gauche_buttonID"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/clignot" />
 
     <ImageButton
-        android:id="@+id/positionLightButtonID5"
+        android:id="@+id/clignot_droit_buttonID"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
@@ -193,7 +193,15 @@
         android:scaleType="fitCenter"
         android:tint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/positionLightButtonID4"
+        app:layout_constraintStart_toEndOf="@+id/clignot_gauche_buttonID"
         app:srcCompat="@drawable/feux_de_position" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="262dp"
+        android:layout_height="178dp"
+        app:srcCompat="@drawable/machine"
+        tools:layout_editor_absoluteX="311dp"
+        tools:layout_editor_absoluteY="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

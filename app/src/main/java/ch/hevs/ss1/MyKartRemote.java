@@ -40,10 +40,10 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     TextView Batterylevel_num;
     ProgressBar batteryLevel;
     ImageButton positionLightButton;
-    ImageButton clignot_droitbutton;
-    ImageButton clignot_gauchebutton;
-    ImageButton feuxdepannebutton;
-    ImageButton gassbutton;
+    ImageButton clignot_droit_button;
+    ImageButton clignot_gauche_button;
+    ImageButton feuxdepanne_button;
+    ImageButton gassbutton_button;
     int seekGasIncrease = 15;
     int beeppauseTime;
     int prevSpeedValue; // valeur de vitesse precedent la nouvelle mesure
@@ -72,8 +72,8 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         setContentView(R.layout.activity_my_kart_remote);
         kart.addKartListener(this);
         positionLightButton = (ImageButton) findViewById(R.id.positionLightButtonID);
-
-
+        clignot_droit_button = (ImageButton) findViewById(R.id.clignot_droit_buttonID);
+        clignot_gauche_button = (ImageButton) findViewById(R.id.clignot_gauche_buttonID);
 
         gasBar = (SeekBar)findViewById(R.id.gasBarID);
 
