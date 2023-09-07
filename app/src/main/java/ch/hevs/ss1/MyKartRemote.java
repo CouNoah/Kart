@@ -36,10 +36,15 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     TextView speedLevelText;
     TextView Batterylevel_num;
     ProgressBar batteryLevel;
+    Button positionLightButton;
     int seekGasIncrease = 15;
     int seekSteeringIncrease = 280;
     int beeppauseTime;
     int prevSpeedValue; // valeur de vitesse precedent la nouvelle mesure
+    double thepositionangle;
+    int Ledtoblink;
+    boolean isledBlinkerindicatoractive = false;
+    int theLedorangeLedToBlink = 1;
     private boolean isLedBlinkerActive;
     private boolean isLedBlinkeronpause;
 
@@ -49,14 +54,15 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         beeppauseTime = 0;
+        thepositionangle = 0;
+        Ledtoblink = 6;
         //initialisation des variables pour le on/off du buzzer
         isLedBlinkerActive = false;
         isLedBlinkeronpause = false;
         // Initialisation des variables
         setContentView(R.layout.activity_my_kart_remote);
         kart.addKartListener(this);
-        Button positionLightButton = (Button) findViewById(R.id.positionLightButtonID);
-        Button chassisLightButton = (Button) findViewById(R.id.chassisLightButton);
+        positionLightButton = (Button) findViewById(R.id.positionLightButtonID);
         gasBar = (SeekBar)findViewById(R.id.gasBarID);
         directionBar = (SeekBar)findViewById(R.id.directionBarID);
         gasLevelText = (TextView)findViewById(R.id.powerLevelTextID);
@@ -130,26 +136,20 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
             }
         });
 
+        //bouton qui active les feux de position avant et arrière
         positionLightButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("BUTTON", "User tapped the positionLightButton");
-                positionLightButton.setBackgroundColor(0xFFFF0000);
-                kart.increaseDriveSpeed();
+                if(!kart.getLedState(0)){
+                    positionLightButton.setBackgroundColor(0x00FF0A);
+                    kart.toggleLed(0);
+                }
+                else {
+                    positionLightButton.setBackgroundColor(0xE1E1E1E1);
+                    kart.toggleLed(0);
+                }
             }
         });
-        chassisLightButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.d("BUTTON", "User tapped the chassisLightButton");
-                kart.decreaseDriveSpeed();
-            }
-        });
-
     }
-
-
-
-    //public void steeringPositionChanged(@NonNull Kart kart, int position){}
-    //permet un affichage constant des valeurs
 
 
     //beep beep arriere et capteur ultrasonic
@@ -208,10 +208,38 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         prevSpeedValue = value;
     }
 
-    //affichage de l'angle actuel sur l'écran
+    //affichage de l'angle actuel sur l'écran et active les clignotant en fonction de la direction choisie
     @Override
     public void steeringPositionChanged(@NonNull Kart kart, int position){
-        angleText.setText(" Angle: " + String.format("%.1f",(((((double)position)-280)*0.075))) + "°");
+        thepositionangle = (((double)position)-280)*0.075;
+        angleText.setText(" Angle: " + String.format("%.1f",((((double)position)-280)*0.075)) + "°");
+        Timer ledBlinkerindicator = new Timer() {
+            @Override
+            public void onTimeout() {
+                kart.toggleLed(theLedorangeLedToBlink);
+
+            }
+        };
+        if (thepositionangle < 5 || thepositionangle > -5){
+            if (!isledBlinkerindicatoractive){
+                ledBlinkerindicator.schedulePeriodically(500);
+                isledBlinkerindicatoractive = true;
+            }
+            if(thepositionangle<0){
+                theLedorangeLedToBlink = 1;
+                kart.setLedState(2,false);
+            } else if (thepositionangle>0) {
+                theLedorangeLedToBlink = 2;
+                kart.setLedState(1,false);
+            }
+        }
+        else {
+            ledBlinkerindicator.stop();
+            kart.setLedState(1,false);
+            kart.setLedState(2,false);
+            isledBlinkerindicatoractive=false;
+        }
+
     }
 
     //affichage du niveau de la batterie

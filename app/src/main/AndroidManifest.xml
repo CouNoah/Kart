@@ -9,17 +9,26 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".MyKartRemote"
-            android:exported="true"
-            android:screenOrientation="landscape">
-
+        <activity
+            android:label="accelerometre"
+            android:name=".accelerometerControl"
+            android:exported="false" />
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
+
+                <category android:name="ch.hevs.kart.RCA2" />
+            </intent-filter>
+        <activity
+            android:label="normal view"
+            android:name=".MyKartRemote"
+            android:exported="true"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.RUN" />
+
                 <category android:name="ch.hevs.kart.RCA2" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
