@@ -3,6 +3,8 @@ package ch.hevs.ss1;
 import static java.lang.Math.abs;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,11 +34,16 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     TextView gasLevelText;
     ImageView sw;
     ImageButton parameterButton;
+
     TextView angleText;
     TextView speedLevelText;
     TextView Batterylevel_num;
     ProgressBar batteryLevel;
-    Button positionLightButton;
+    ImageButton positionLightButton;
+    ImageButton clignot_droitbutton;
+    ImageButton clignot_gauchebutton;
+    ImageButton feuxdepannebutton;
+    ImageButton gassbutton;
     int seekGasIncrease = 15;
     int beeppauseTime;
     int prevSpeedValue; // valeur de vitesse precedent la nouvelle mesure
@@ -64,8 +71,14 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         //Initialisation des variables
         setContentView(R.layout.activity_my_kart_remote);
         kart.addKartListener(this);
-        positionLightButton = (Button) findViewById(R.id.positionLightButtonID);
+        positionLightButton = (ImageButton) findViewById(R.id.positionLightButtonID);
+
+
+
         gasBar = (SeekBar)findViewById(R.id.gasBarID);
+
+
+
 
         //initialisation pour la rotation
         directionBar = (SeekBar)findViewById(R.id.directionBarID);
@@ -76,7 +89,9 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
 
         gasLevelText = (TextView)findViewById(R.id.powerLevelTextID);
         sw = (ImageView)findViewById(R.id.swID);
+
         parameterButton = (ImageButton)findViewById((R.id.parameterButtonID));
+
         angleText = (TextView)findViewById(R.id.angleTextID);
         txt_uSonic_distance = (TextView) findViewById(R.id.txt_uSonic_distanceID);
         speedLevelText = (TextView) findViewById(R.id.powerLevelTextID2);
@@ -119,10 +134,9 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         directionBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Log.d("SEEKBAR", "move");
-                //angleText.setText(" Angle: " + i + String.valueOf(kart.getSteeringPosition()) + String.valueOf(kart.getSteeringPositionNormalized()));
+                //Log.d("SEEKBAR", "move");
                 kart.setSteeringTargetPosition(i);
-                System.out.println("angle " + i);
+                //System.out.println("angle " + i);
 
             }
 
@@ -149,16 +163,31 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         positionLightButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(!kart.getLedState(0)){
-                    positionLightButton.setBackgroundColor(0x00FF0A);
+                    //((Button) positionLightButton).setBackgroundColor(Color.GREEN);
+                    positionLightButton.setBackgroundTintList(ColorStateList.valueOf(995299971));
                     kart.toggleLed(0);
-
                 }
                 else {
-                    positionLightButton.setBackgroundColor(0xE1E1E1E1);
+                    positionLightButton.setBackgroundTintList(ColorStateList.valueOf(995299971));
                     kart.toggleLed(0);
                 }
             }
         });
+
+        /*feuxdepanne.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!kart.getLedState(0)){
+                    //((Button) positionLightButton).setBackgroundColor(Color.GREEN);
+                    feuxdepanne.setBackgroundTintList(ColorStateList.valueOf(995299971));
+                    System.out.println(positionLightButton.getBackgroundTintList());
+                    kart.toggleLed(0);
+                }
+                else {
+                    feuxdepanne.setBackgroundTintList(ColorStateList.valueOf(995299971));
+                    kart.toggleLed(0);
+                }
+            }
+        });*/
     }
 
 
@@ -184,7 +213,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         };
         //détermine si il faut recomencer a faire le beep beep
         System.out.println(distance);
-        txt_uSonic_distance.setText(String.format("%.2f",distance + "m"));
+        txt_uSonic_distance.setText(String.format("%.2f",((float)(distance)) + "m"));
         System.out.print(kart.getLedState(7));
         if(distance<= 1 && !isLedBlinkerActive && !isLedBlinkeronpause){
             beeppauseTime = (int)(distance*5000);
@@ -201,7 +230,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     @Override
     public void hallSensorCountChanged(@NonNull Kart kart, int hallSensorNb, int value){
         if(hallSensorNb==0){
-            speedLevelText.setText("Speed : "+ String.format("%.2f",(((double)value/4)*(70)*(3.1415*60/63360))));
+            speedLevelText.setText("Speed : "+ String.format("%.2f",(((double)(value/4)*(70)*(3.1415*60/63360)))));
         }
         //active les LEDs de frein et de gaz en fonction de l'acceleration ou deceleration
         if (value > prevSpeedValue){
@@ -224,7 +253,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         System.out.println("Steering changed: " + position + ", middle: " + kart.setup().getSteeringCenterPosition() + ", max: " + kart.setup().getSteeringMaxPosition());
         thepositionangle = ((double) (position - steeringMiddlePosition)) * 0.075;
         angleText.setText(String.format("Angle: %.0f°",thepositionangle));
-        sw.setRotation((float)(thepositionangle)-35);
+        sw.setRotation((float)(thepositionangle));
         Timer ledBlinkerindicator = new Timer() {
             @Override
             public void onTimeout() {
@@ -238,11 +267,11 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
                 isledBlinkerindicatoractive = true;
             }
             if(thepositionangle<0){
-                theLedorangeLedToBlink = 1;
-                kart.setLedState(2,false);
-            } else if (thepositionangle>0) {
                 theLedorangeLedToBlink = 2;
                 kart.setLedState(1,false);
+            } else if (thepositionangle>0) {
+                theLedorangeLedToBlink = 1;
+                kart.setLedState(2,false);
             }
         }
         else {
