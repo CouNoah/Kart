@@ -64,9 +64,11 @@
         android:id="@+id/txt_uSonic_distanceID3"
         android:layout_width="18dp"
         android:layout_height="19dp"
+        android:layout_marginStart="785dp"
+        android:layout_marginTop="39dp"
         android:text="0"
-        tools:layout_editor_absoluteX="785dp"
-        tools:layout_editor_absoluteY="39dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -93,18 +95,20 @@
         android:id="@+id/batterylevel_numID3"
         android:layout_width="98dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
         android:text="100%"
         app:layout_constraintBottom_toTopOf="@+id/batteryLevelID3"
         app:layout_constraintStart_toEndOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="81dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="4dp"
         android:text="Battery level:"
         app:layout_constraintBottom_toTopOf="@+id/batteryLevelID3"
-        tools:layout_editor_absoluteX="492dp" />
+        tools:layout_editor_absoluteX="480dp" />
 
     <ProgressBar
         android:id="@+id/batteryLevelID3"
