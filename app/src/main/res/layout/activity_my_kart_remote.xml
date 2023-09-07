@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MyKartRemote">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="431dp"
+        android:layout_height="155dp"
+        android:layout_marginBottom="52dp"
+        app:layout_constraintBottom_toTopOf="@+id/directionBarID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/tableau_de_boord" />
+
     <ImageButton
         android:id="@+id/clignot_gauche_buttonID"
         android:layout_width="60dp"
@@ -30,11 +39,11 @@
         android:scaleType="fitCenter"
         android:tint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/positionLightButtonID3"
+        app:layout_constraintStart_toEndOf="@+id/backToFuture_buttonID"
         app:srcCompat="@drawable/clignot" />
 
     <ImageButton
-        android:id="@+id/positionLightButtonID2"
+        android:id="@+id/feuxdepanne_buttonID"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
@@ -47,7 +56,7 @@
         app:srcCompat="@drawable/feux_de_panne" />
 
     <ImageButton
-        android:id="@+id/positionLightButtonID3"
+        android:id="@+id/backToFuture_buttonID"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
@@ -56,7 +65,7 @@
         android:scaleType="fitCenter"
         android:tint="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/positionLightButtonID2"
+        app:layout_constraintStart_toEndOf="@+id/feuxdepanne_buttonID"
         app:srcCompat="@drawable/logo_app" />
 
     <SeekBar
@@ -64,13 +73,13 @@
         android:layout_width="382dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="1dp"
         android:max="560"
         android:pointerIcon="context_menu"
         android:progress="280"
         android:thumb="@android:drawable/btn_radio"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parameterButtonID"
+        app:layout_constraintTop_toBottomOf="@+id/swID"
         app:layout_goneMarginLeft="100dp" />
 
     <SeekBar
@@ -94,12 +103,12 @@
         style="@style/Widget.AppCompat.ImageButton"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="12dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitStart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/batteryLevelID"
         app:srcCompat="@drawable/ic_settings" />
 
     <TextView
@@ -138,8 +147,8 @@
         android:id="@+id/swi_uSonicID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="58dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
         android:text="Buzzer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -158,7 +167,7 @@
         android:id="@+id/txt_uSonic_distanceID"
         android:layout_width="101dp"
         android:layout_height="22dp"
-        android:layout_marginEnd="47dp"
+        android:layout_marginEnd="4dp"
         android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swi_uSonicID" />
@@ -175,11 +184,12 @@
 
     <ImageView
         android:id="@+id/swID"
-        android:layout_width="225dp"
-        android:layout_height="225dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="60dp"
         android:rotation="0"
-        app:layout_constraintStart_toEndOf="@+id/parameterButtonID"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/abc_def" />
 
@@ -200,8 +210,10 @@
         android:id="@+id/imageView"
         android:layout_width="262dp"
         android:layout_height="178dp"
-        app:srcCompat="@drawable/machine"
-        tools:layout_editor_absoluteX="311dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="88dp"
+        app:layout_constraintEnd_toStartOf="@+id/swi_uSonicID"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/machine" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

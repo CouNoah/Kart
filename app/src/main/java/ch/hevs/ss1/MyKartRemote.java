@@ -43,7 +43,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     ImageButton clignot_droit_button;
     ImageButton clignot_gauche_button;
     ImageButton feuxdepanne_button;
-    ImageButton gassbutton_button;
+    ImageButton backToFuture_button;
     int seekGasIncrease = 15;
     int beeppauseTime;
     int prevSpeedValue; // valeur de vitesse precedent la nouvelle mesure
@@ -74,6 +74,8 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         positionLightButton = (ImageButton) findViewById(R.id.positionLightButtonID);
         clignot_droit_button = (ImageButton) findViewById(R.id.clignot_droit_buttonID);
         clignot_gauche_button = (ImageButton) findViewById(R.id.clignot_gauche_buttonID);
+        feuxdepanne_button = (ImageButton) findViewById(R.id.feuxdepanne_buttonID);
+        backToFuture_button = (ImageButton) findViewById(R.id.backToFuture_buttonID);
 
         gasBar = (SeekBar)findViewById(R.id.gasBarID);
 
@@ -230,7 +232,8 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     @Override
     public void hallSensorCountChanged(@NonNull Kart kart, int hallSensorNb, int value){
         if(hallSensorNb==0){
-            speedLevelText.setText("Speed : "+ String.format("%.2f",(((double)(value/4)*(70)*(3.1415*60/63360)))));
+            //speedLevelText.setText("Speed : "+ String.format("%.2f",(((double)(value/4)*(70)*(3.1415*60/63360)))));
+            speedLevelText.setText(String.valueOf(value));
         }
         //active les LEDs de frein et de gaz en fonction de l'acceleration ou deceleration
         if (value > prevSpeedValue){
