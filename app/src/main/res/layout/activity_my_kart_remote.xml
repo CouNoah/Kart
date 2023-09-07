@@ -24,6 +24,8 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="#E1E1E1E1"
         android:text="Feux de position"
+        android:textColorHighlight="#000000"
+        android:textColorLink="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -107,9 +109,10 @@
         android:layout_width="265dp"
         android:layout_height="251dp"
         android:layout_marginTop="16dp"
+        android:rotation="-35"
         app:layout_constraintStart_toEndOf="@+id/parameterButtonID"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/guidon" />
 
     <Switch
         android:id="@+id/swi_uSonicID"
