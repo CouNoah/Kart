@@ -259,12 +259,13 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         System.out.println(distance);
         txt_uSonic_distance.setText(distance + "m");
         System.out.print(kart.getLedState(7));
-        if(distance <= 0.2 && !isLedBlinkerActive){
+        if(distance <= 0.5 && !isLedBlinkerActive && swi_uSonic.isChecked()){
             beeppauseTime = (int)(distance*5000);
             kart.setLedState(7,true);
             //ledBlinker.scheduleOnce(beeppauseTime);
             isLedBlinkerActive = true;
         }else if (distance< 1 || !swi_uSonic.isChecked()){
+            kart.setLedState(7,false);
             //ledBlinker.stop();
             isLedBlinkerActive = false;
         }
@@ -290,35 +291,38 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         Timer ledBlinkerindicator = new Timer() {
             @Override
             public void onTimeout() {
-                kart.toggleLed(theLedorangeLedToBlink);
+                if(thepositionangle<-5){
+                    kart.toggleLed(2);
+                    clignot_gauche_button.setBackgroundTintList(ColorStateList.valueOf(0xFFFF8C00));
+                    kart.setLedState(1,false);
+                    clignot_droit_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
+                } else if (thepositionangle>5) {
+                    kart.toggleLed(1);
+                    clignot_droit_button.setBackgroundTintList(ColorStateList.valueOf(0xFFFF8C00));
+                    kart.setLedState(2,false);
+                    clignot_gauche_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
+                }else {
+                    kart.setLedState(2,false);
+                    clignot_gauche_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
+                    clignot_droit_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
+                    kart.setLedState(1,false);
+                }
 
             }
         };
-       if (thepositionangle < 5 || thepositionangle > -5){
+       if (thepositionangle > 5 || thepositionangle < -5){
             if (!isledBlinkerindicatoractive){
                 ledBlinkerindicator.schedulePeriodically(500);
                 isledBlinkerindicatoractive = true;
             }
-            if(thepositionangle<5){
-                theLedorangeLedToBlink = 2;
-                kart.setLedState(1,false);
-            } else if (thepositionangle>5) {
-                theLedorangeLedToBlink = 1;
-                kart.setLedState(2,false);
-            }
-            else {
-                ledBlinkerindicator.stop();
-                kart.setLedState(1,false);
-                kart.setLedState(2,false);
-                isledBlinkerindicatoractive=false;
-            }
+
         }
-        else {
+        /*else {
             ledBlinkerindicator.stop();
             kart.setLedState(1,false);
             kart.setLedState(2,false);
             isledBlinkerindicatoractive=false;
-        }
+        }*/
 
     }
 
