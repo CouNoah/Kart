@@ -25,7 +25,6 @@ import ch.hevs.kart.utils.Timer;
 
 public class MyKartRemote extends AbstractKartControlActivity implements KartListener {
 //actions - réaction
-    String lightButtonColor = "E1E1E1E1";
     SeekBar gasBar;
     SeekBar directionBar;
     Switch swi_uSonic;
@@ -51,11 +50,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     int theLedorangeLedToBlink = 1;
     int steeringMiddlePosition;
     private boolean isLedBlinkerActive;
-    private boolean isLedBlinkeronpause;
 
-    boolean isactive_panne = false;
-    boolean isactive_droit = false;
-    boolean isactive_gauche = false;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -67,7 +62,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
 
         //initialisation des variables pour le on/off du buzzer
         isLedBlinkerActive = false;
-        isLedBlinkeronpause = false;
+
 
         //Initialisation des variables
         setContentView(R.layout.activity_my_kart_remote);
@@ -114,8 +109,17 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         gasBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            kart.setDriveSpeed(i-seekGasIncrease);
-            Log.d("DRIVE MOTOR", String.valueOf(kart.getDriveSpeed()));
+                kart.setDriveSpeed(i-seekGasIncrease);
+                Log.d("DRIVE MOTOR", String.valueOf(kart.getDriveSpeed()));
+                if(i < 16) {
+                    kart.setLedState(3, true); //LEDs freins
+                    kart.setLedState(4, false); //LEDs gaz
+                }
+                if(i >= 16){
+                    kart.setLedState(3,false); //LEDs freins
+                    kart.setLedState(4,true); //LEDs gaz
+                }
+
             }
 
             @Override
@@ -164,100 +168,68 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         positionLightButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(!kart.getLedState(0)){
-                    //((Button) positionLightButton).setBackgroundColor(Color.GREEN);
-                    positionLightButton.setForegroundTintList(ColorStateList.valueOf(995299971));
+                    positionLightButton.setBackgroundTintList(ColorStateList.valueOf(995299971));
                     kart.toggleLed(0);
                 }
                 else {
-                    positionLightButton.setForegroundTintList(ColorStateList.valueOf(995299971));
+                    positionLightButton.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
                     kart.toggleLed(0);
                 }
             }
         });
 
+        //bouton de feux de panne
         feuxdepanne_button.setOnClickListener(new View.OnClickListener() {
-            private Timer ledBlinkerpanne = new Timer() {
-
-                @Override
-                public void onTimeout() {
-                    kart.toggleLed(1);
-                    kart.toggleLed(2);
-                    if (!kart.getLedState(2)) {
-                        feuxdepanne_button.setForegroundTintList(ColorStateList.valueOf(0xFFFF1100));
-                    }else {
-                        feuxdepanne_button.setForegroundTintList(ColorStateList.valueOf(0xFF000000));
-                    }
-                }
-            };
             public void onClick(View v) {
 
-                if(!isactive_panne){
-                    ledBlinkerpanne.schedulePeriodically(500);
-                    isactive_panne=true;
+                if(!kart.getLedState(2)){
+                    feuxdepanne_button.setBackgroundTintList(ColorStateList.valueOf(0xFFFF1100));
+                    kart.setLedState(1,false);
+                    kart.setLedState(2,false);
                 }
                 else {
-                    ledBlinkerpanne.stop();
-                    isactive_panne=false;
+                    kart.setLedState(1,false);
+                    kart.setLedState(2,false);
+                    feuxdepanne_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
                 }
             }
         });
 
+        //bouton clignot droit
         clignot_droit_button.setOnClickListener(new View.OnClickListener() {
-            private Timer ledBlinkerdroitt = new Timer() {
 
-                @Override
-                public void onTimeout() {
-                    kart.toggleLed(2);
-                    if (!kart.getLedState(2)) {
-                        clignot_droit_button.setForegroundTintList(ColorStateList.valueOf(0xFFFF8C00));
-                    }else {
-                        clignot_droit_button.setForegroundTintList(ColorStateList.valueOf(0xFF000000));
-                    }
-                }
-            };
             public void onClick(View v) {
 
-                if(!isactive_droit){
-                    ledBlinkerdroitt.schedulePeriodically(500);
-                    isactive_droit = true;
+                if(!kart.getLedState(2)){
+                    kart.setLedState(2,true);
+                    clignot_droit_button.setBackgroundTintList(ColorStateList.valueOf(0xFFFF8C00));
                 }
                 else {
-                    ledBlinkerdroitt.stop();
-                    isactive_droit=false;
+                    kart.setLedState(2,false);
+                    clignot_droit_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
                 }
             }
         });
 
+        //bouton clignot gauche
         clignot_gauche_button.setOnClickListener(new View.OnClickListener() {
-            private Timer ledBlinkergauche = new Timer() {
-
-                @Override
-                public void onTimeout() {
-                    kart.toggleLed(1);
-                    if (!kart.getLedState(1)) {
-                        clignot_gauche_button.setForegroundTintList(ColorStateList.valueOf(0xFFFF8C00));
-                    }else {
-                        clignot_gauche_button.setForegroundTintList(ColorStateList.valueOf(0xFF000000));
-                    }
-                }
-            };
             public void onClick(View v) {
 
-                if(!isactive_gauche){
-                    ledBlinkergauche.schedulePeriodically(500);
-                    isactive_gauche = true;
+                if(!kart.getLedState(1)){
+                    kart.setLedState(1,true);
+                    clignot_gauche_button.setBackgroundTintList(ColorStateList.valueOf(0xFFFF8C00));
                 }
                 else {
-                    ledBlinkergauche.stop();
-                    isactive_gauche = true;
+                    kart.setLedState(1,false);
+                    clignot_gauche_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
                 }
             }
         });
 
+        //bouton avec logo du film
         backToFuture_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(!kart.getLedState(4)){
-                    //((Button) positionLightButton).setBackgroundColor(Color.GREEN);
                     backToFuture_button.setBackgroundTintList(ColorStateList.valueOf(0xFF03A9F4));
                     kart.toggleLed(4);
                 }
@@ -272,37 +244,29 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
 
 
     //beep beep arriere et capteur ultrasonic
-    @Override
+    //@Override
     public void ultrasonicRangerDistanceChanged(@NonNull Kart kart, double distance) {
         //KartListener.super.ultrasonicRangerDistanceChanged(kart, distance);
 
-        Timer ledpause = new Timer() {// timer de pause du beepeur
-            @Override
-            public void onTimeout() {
-                isLedBlinkeronpause= false;
-            }
-        };
-        Timer ledBlinker = new Timer() {        // timer de marche du beepeur
+        /*Timer ledBlinker = new Timer() {        // timer de marche du beepeur
             @Override
             public void onTimeout() {
                 kart.setLedState(7,false);
                 isLedBlinkerActive = false;
-                isLedBlinkeronpause= true;
-                ledpause.scheduleOnce(beeppauseTime);
             }
-        };
+        };*/
         //détermine si il faut recomencer a faire le beep beep
         System.out.println(distance);
-        txt_uSonic_distance.setText(String.valueOf(distance) + "m");
+        txt_uSonic_distance.setText(distance + "m");
         System.out.print(kart.getLedState(7));
-        if(distance<= 1 && !isLedBlinkerActive && !isLedBlinkeronpause){
+        if(distance <= 0.2 && !isLedBlinkerActive){
             beeppauseTime = (int)(distance*5000);
             kart.setLedState(7,true);
-            ledBlinker.scheduleOnce(500);
+            //ledBlinker.scheduleOnce(beeppauseTime);
             isLedBlinkerActive = true;
-        }else if (distance< 1 || swi_uSonic.isChecked()== false){
-            ledBlinker.stop();
-            ledpause.stop();
+        }else if (distance< 1 || !swi_uSonic.isChecked()){
+            //ledBlinker.stop();
+            isLedBlinkerActive = false;
         }
     }
 
@@ -311,22 +275,9 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     @Override
     public void hallSensorCountChanged(@NonNull Kart kart, int hallSensorNb, int value){
         if(hallSensorNb==0){
-            //speedLevelText.setText("Speed : "+ String.format("%.2f",(((double)(value/4)*(70)*(3.1415*60/63360)))));
-            speedLevelText.setText(String.valueOf(value));
+            speedLevelText.setText(String.valueOf(value-prevSpeedValue));
+            prevSpeedValue = value;
         }
-        //active les LEDs de frein et de gaz en fonction de l'acceleration ou deceleration
-        if (value > prevSpeedValue){
-            kart.setLedState(4,true);
-            kart.setLedState(3,false);
-        }else if (value < prevSpeedValue){
-            kart.setLedState(4,false);
-            kart.setLedState(3,true);
-        }else {
-            kart.setLedState(4,false);
-            kart.setLedState(3,false);
-        }
-
-        prevSpeedValue = value;
     }
 
     //affichage de l'angle actuel sur l'écran et active les clignotant en fonction de la direction choisie
@@ -348,12 +299,18 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
                 ledBlinkerindicator.schedulePeriodically(500);
                 isledBlinkerindicatoractive = true;
             }
-            if(thepositionangle<0){
+            if(thepositionangle<5){
                 theLedorangeLedToBlink = 2;
                 kart.setLedState(1,false);
-            } else if (thepositionangle>0) {
+            } else if (thepositionangle>5) {
                 theLedorangeLedToBlink = 1;
                 kart.setLedState(2,false);
+            }
+            else {
+                ledBlinkerindicator.stop();
+                kart.setLedState(1,false);
+                kart.setLedState(2,false);
+                isledBlinkerindicatoractive=false;
             }
         }
         else {
@@ -368,7 +325,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     //affichage du niveau de la batterie
     @Override
     public void batteryLevelChanged(@NonNull Kart kart, double level){
-        Batterylevel_num.setText(String.format("%.1f", (level*100)) + "%");
+        Batterylevel_num.setText(String.format("%.1f%", (level*100)));
         batteryLevel.setProgress((int)(level*100));
     }
 
