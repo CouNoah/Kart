@@ -284,7 +284,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     //affichage de l'angle actuel sur l'écran et active les clignotant en fonction de la direction choisie
     @Override
     public void steeringPositionChanged(@NonNull Kart kart, int position){
-        System.out.println("Steering changed: " + position + ", middle: " + kart.setup().getSteeringCenterPosition() + ", max: " + kart.setup().getSteeringMaxPosition());
+        //System.out.println("Steering changed: " + position + ", middle: " + kart.setup().getSteeringCenterPosition() + ", max: " + kart.setup().getSteeringMaxPosition());
         thepositionangle = ((double) (position - steeringMiddlePosition)) * 0.075;
         angleText.setText(String.format("Angle: %.0f°",thepositionangle));
         sw.setRotation((float)(thepositionangle));
@@ -329,7 +329,8 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
     //affichage du niveau de la batterie
     @Override
     public void batteryLevelChanged(@NonNull Kart kart, double level){
-        Batterylevel_num.setText(String.format("%.1f%", (level*100)));
+        System.out.println("Battery " + level);
+        Batterylevel_num.setText(String.valueOf((int)(level*100)) + "%");
         batteryLevel.setProgress((int)(level*100));
     }
 

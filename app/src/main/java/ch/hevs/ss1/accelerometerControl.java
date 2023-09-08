@@ -70,9 +70,4 @@ public class accelerometerControl extends AbstractKartControlActivity implements
     }
 
     //affichage du niveau de la batterie
-    @Override
-    public void batteryLevelChanged(@NonNull Kart kart, double level){
-        Batterylevel_num1.setText(String.format("%.1f", (level*100)) + "%");
-        batteryLevel.setProgress((int)(level*100));
-    }
 }
