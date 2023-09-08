@@ -184,8 +184,8 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
 
                 if(!kart.getLedState(2)){
                     feuxdepanne_button.setBackgroundTintList(ColorStateList.valueOf(0xFFFF1100));
-                    kart.setLedState(1,false);
-                    kart.setLedState(2,false);
+                    kart.setLedState(1,true);
+                    kart.setLedState(2,true);
                 }
                 else {
                     kart.setLedState(1,false);
@@ -200,12 +200,12 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
 
             public void onClick(View v) {
 
-                if(!kart.getLedState(2)){
-                    kart.setLedState(2,true);
+                if(!kart.getLedState(1)){
+                    kart.setLedState(1,true);
                     clignot_droit_button.setBackgroundTintList(ColorStateList.valueOf(0xFFFF8C00));
                 }
                 else {
-                    kart.setLedState(2,false);
+                    kart.setLedState(1,false);
                     clignot_droit_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
                 }
             }
@@ -215,12 +215,12 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
         clignot_gauche_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(!kart.getLedState(1)){
-                    kart.setLedState(1,true);
+                if(!kart.getLedState(2)){
+                    kart.setLedState(2,true);
                     clignot_gauche_button.setBackgroundTintList(ColorStateList.valueOf(0xFFFF8C00));
                 }
                 else {
-                    kart.setLedState(1,false);
+                    kart.setLedState(2,false);
                     clignot_gauche_button.setBackgroundTintList(ColorStateList.valueOf(0x00FFFFFF));
                 }
             }
@@ -294,7 +294,7 @@ public class MyKartRemote extends AbstractKartControlActivity implements KartLis
 
             }
         };
-        if (thepositionangle < 5 || thepositionangle > -5){
+       if (thepositionangle < 5 || thepositionangle > -5){
             if (!isledBlinkerindicatoractive){
                 ledBlinkerindicator.schedulePeriodically(500);
                 isledBlinkerindicatoractive = true;
